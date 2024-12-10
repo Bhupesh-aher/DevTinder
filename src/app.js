@@ -3,22 +3,37 @@ const express = require("express")
 const app = express();
 
 
-app.use("/api", (req, res) => {
-    res.send("api ");
-    
-});
-
-app.use("/hello", (req, res) => {
-    res.send("hello ");
-    
-});
 
 
 
-app.use("/", (req, res) => {
-    res.send("this is the front page ");
-    
-});
+app.get("/user", (req, res) => {
+    res.send({
+        firstName: "gulu",
+        lastName: "singh"
+    })
+})
+
+app.post("/user", (req, res) => {
+    // here we are saving data of user in DB
+    res.send("data successfully saved to the database");
+})
+
+
+app.delete("/user", (req, res) => {
+    res.send("data deleted");
+})
+
+
+app.use("/user", (req, res) => {
+    res.send("HAHAHA")
+}) 
+// this will match all the http methods(get, post, patch, delete and more) API calls - /test
+app.use("/test", (req, res) => {
+    res.send("test ")
+})
+
+
+
 
 
 
