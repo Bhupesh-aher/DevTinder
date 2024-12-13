@@ -43,10 +43,7 @@ app.get("/user", async (req, res) => {
 })
 
 
-
-
 // Feed API - GET /feed - get all the users from the database
-
 app.get("/feed", async (req, res) => {
     try{
         const users = await User.find({});
@@ -58,8 +55,35 @@ app.get("/feed", async (req, res) => {
 
 })
 
+// Delete a user from the database
+app.delete("/user", async(req, res) => {
+    const userId = req.body.userId;
+    try{
+        const user = await User.findOneAndDelete({_id: userId})
+        // this below line is a short hand for above line
+        // const user = await User.findByIdAndDelete(userId)
+        res.send("user deleted succesfully")
+    }
+    catch{
+        res.status(400).send("something went wrong ")
+        
+    }
+})
 
-
+ 
+// update data of the user
+app.patch("/user",async (req, res) => {
+    const userId = req.body.userId;
+    const data = req.body;
+    
+    try{
+        await User.findByIdAndUpdate({_id: userId}, data)   
+        res.send("user updated successfully")
+    }
+    catch(err) {
+        res.send("something went wrong")
+    }
+})
 
 
 
