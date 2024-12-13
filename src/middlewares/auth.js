@@ -4,10 +4,12 @@ const adminAuth = (req, res, next) => {
     const isAdminAuthorized = tokens === "xyz";
     if(!isAdminAuthorized){
         res.status(401).send("unauthorized request");
+        
     }
     else{
-        next();
-    }  
+        next();    
+    } 
+    
 }
 
 
