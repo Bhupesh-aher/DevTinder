@@ -5,10 +5,13 @@ const User = require('./models/user')
 const connectDB = require("./config/database")
 const {validateSignUpData} = require("./utils/validation")
 const bcrypt = require("bcrypt");
+const cookieParser = require("cookie-parser")
+const jwt = require("jsonwebtoken")
 
 app.use(express.json());
+app.use(cookieParser()); // to read cookie when it comes from client
 
-// Sign up API 
+// Sign up API  
 app.post("/signup", async(req, res) => {
 
     try{
@@ -47,7 +50,14 @@ app.post("/login", async(req, res) => {
         }
         const isPasswordValid = await bcrypt.compare(password, user.password)
         if(isPasswordValid){
-            res.send("Login successful !!")
+            // Create a JWT Token                            secret key/password which only server knows and user don't know about this it only for server 
+            const token = await jwt.sign({_id: user._id}, )
+           
+            
+
+            // add the token to cookie and send the response back to the user
+            res.cookie("token", token)
+            res.send("Login successfull !!")
         }
         else{
             throw new Error("Wrong password")
@@ -56,6 +66,36 @@ app.post("/login", async(req, res) => {
     catch(err){
         res.status(400).send("Error : " + err.message);
     }
+})
+
+app.get("/profile",async (req, res) => {
+
+    try{
+        const cookies = req.cookies;
+        const {token} = cookies;
+        if(!token) {
+            throw new Error("Invalid Token")
+        }
+        console.log(token);
+        
+    
+    
+        // validate the token                             signature/ secret key which only server knows and user don't know about this it only for server  
+        const decodeMessage = await jwt.verify(token,)
+        console.log(decodeMessage);
+        
+        const {_id} = decodeMessage;
+        const user = await User.findById(_id);
+        if(!user){
+            throw new Error("Please login again")
+
+        }
+        res.send(user);
+    }
+    catch(err){
+        res.status(400).send("Error : " + err.message);
+    }
+    
 })
 
 
