@@ -47,23 +47,20 @@ app.post("/login", async(req, res) => {
 
     try{
         const {emailId, password} =req.body;
-
         const user = await User.findOne({emailId: emailId})
+
         if(!user){
             throw new Error("Invalid credentials");
-        }
-        const isPasswordValid = await bcrypt.compare(password, user.password)
-        if(isPasswordValid){
-            // Create a JWT Token                            secret key/password which only server knows and user don't know about this it only for server 
-            const token = await jwt.sign({_id: user._id}, )
-           
-            
+        }                                             // passwordInputByUser
+        const isPasswordValid = await user.validatePassword(password)
 
-            // add the token to cookie and send the response back to the user
+        if(isPasswordValid){
+            const token = await user.getJWT();
             res.cookie("token", token)
             res.send("Login successfull !!")
         }
-        else{
+
+        else {
             throw new Error("Wrong password")
         }
     }
@@ -71,6 +68,8 @@ app.post("/login", async(req, res) => {
         res.status(400).send("Error : " + err.message);
     }
 })
+
+
 
 
 
