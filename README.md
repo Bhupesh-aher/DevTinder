@@ -66,6 +66,12 @@ GET /user/feed - it gets you the profiles of other users on platform
 
 - POST /request/send/interested/:userId 
 - POST /request/send/ignored/:userId  
+- i can create one api as above both api has only one different thing   - that is intersetd and ignored
+- so status can either be interesed or ignored
+
+- POST /request/send/:status/:userId  
+
+
 - POST /request/review/accepted/:requestId  
 - POST /request/review/rejected/:requestId  
 
