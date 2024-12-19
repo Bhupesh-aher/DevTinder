@@ -23,7 +23,12 @@ const connectionRequestSchema = new mongoose.Schema({
     }
 )
 
-// it is like a middleware and before schema save it will be called
+
+// Compound index
+connectionRequestSchema.index({ fromUserId: 1, toUserId: 1 });
+
+
+// it is like a middleware and before schema save it in DB. it will be called
 connectionRequestSchema.pre("save", function(next) {
     const connectionRequest = this;
     // Check if the fromUserId is same as toUserId

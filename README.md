@@ -65,15 +65,28 @@ GET /user/feed - it gets you the profiles of other users on platform
 # Connection request router
 
 - POST /request/send/interested/:userId 
-- POST /request/send/ignored/:userId  
-- i can create one api as above both api has only one different thing   - that is intersetd and ignored
+- POST /request/send/ignored/:userId 
+
+- i can create one api as logic of writting both api is same and above - - both api has only one different thing   - that is intersetd and ignored
 - so status can either be interesed or ignored
+- so we don't have to make two different APIs for interested and 
+ - ignored the connection
 
 - POST /request/send/:status/:userId  
 
 
+
 - POST /request/review/accepted/:requestId  
 - POST /request/review/rejected/:requestId  
+
+- i can create one api as logic of writting both api is same and above  - both api has only one different thing   
+- that is intersetd and ignored
+- so status can either be accepted or rejected
+- so we don't have to make two different APIs for accepting and 
+ - rejecting the connection
+
+- POST /request/review/:status/:requestId  
+
 
 
 # User router
