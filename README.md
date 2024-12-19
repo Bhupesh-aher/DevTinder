@@ -32,7 +32,8 @@
 # below APIs are for users connections and recived request
 
 - GET /user/connections      - as user who are in my connections 
-- GET /user/request/         - as user other people who has send me   
+- GET /user/request/received         
+                               - as user other people who has send me   
                                connection request  (recieved requests)
 # Feed API 
 
