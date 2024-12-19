@@ -72,17 +72,67 @@ userRouter.get("/user/connections", userAuth, async(req, res) => {
 })
 
 
+userRouter.get("/feed", userAuth, async(req, res) => {
+    try{
+        // find all connection request which i have send or received
+        const loggedInUser = req.user;
+
+        const connectionRequest = await ConnectionRequest.find({
+            $or: [
+                { fromUserId: loggedInUser._id },
+                { toUserId: loggedInUser._id },
+            ]
+        }).select("fromUserId toUserId")
+        //   .populate("fromUserId", "firstName")
+        //   .populate("toUserId", "firstName")
+
+        const hideUsersFromFeed = new Set();
+        connectionRequest.forEach((req) => {
+            hideUsersFromFeed.add(req.fromUserId.toString())
+            hideUsersFromFeed.add(req.toUserId.toString())
+        })
+        console.log(hideUsersFromFeed);  // these are the people whom i want to hide from my feed
+        
+        const users = await User.find({
+            $and: [
+                {_id: { $nin: Array.from(hideUsersFromFeed) }  },
+                {_id: { $ne: loggedInUser._id }}
+            ] ,  
+        }).select("firstName lastName photoUrl skills about")
+    //    .select(USER_SAFE_DATA)
+        console.log(users);
+        
+        res.send(users)
+    }
+    catch(err){
+        res.status(400).send("Error : " + err.message)
+    } 
+})
+
+
 module.exports = userRouter;
 
 
 
 
 
-    // connectionRequest.forEach(doc => {
-        //     User.findOne({
-        //         _id: doc.fromUserId
-        //     }).then((req) => {
-        //         console.log(req);
-                
-        //     })
-        // });
+// User should see all the user cards except 
+// 1. his own card
+// 2. his connections
+// 3. ignored people
+// 4. already sent the connection request to the user
+
+// Array.from(hideUsersFromFeed) 
+// so hideUsersFromFeed is a set 
+// and to covert that set into an array 
+// i have used the Array.from 
+// Array.from(hideUsersFromFeed) like this
+ 
+
+// {_id: { $nin: Array.from(hideUsersFromFeed) }  },
+// {_id: { $ne: loggedInUser._id }}
+
+// $nin - not in (not in this array)
+// $ne - not equal to
+
+
