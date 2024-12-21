@@ -96,7 +96,7 @@ userRouter.get("/feed", userAuth, async(req, res) => {
             hideUsersFromFeed.add(req.fromUserId.toString())
             hideUsersFromFeed.add(req.toUserId.toString())
         })
-        console.log(hideUsersFromFeed);  // these are the people whom i want to hide from my feed
+        // console.log(hideUsersFromFeed);  // these are the people whom i want to hide from my feed
         
         const users = await User.find({
             $and: [
@@ -105,7 +105,7 @@ userRouter.get("/feed", userAuth, async(req, res) => {
             ] ,  
         }).select("firstName lastName photoUrl skills about").skip(skip).limit(limit)
     //    .select(USER_SAFE_DATA)
-        console.log(users);
+        // console.log(users);
         
         res.json({data: users})
     }
@@ -116,6 +116,20 @@ userRouter.get("/feed", userAuth, async(req, res) => {
 
 
 module.exports = userRouter;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
