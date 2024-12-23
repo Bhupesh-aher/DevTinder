@@ -19,9 +19,9 @@ userRouter.get("/user/requests/received", userAuth, async(req, res) => {
 
     //  }).populate("fromUserId", "firstName lastName photoUrl age gender skills");
 
-        if(connectionRequest.length === 0) {
-            return res.status(400).send("No Connection Request Pending")
-        }
+        // if(connectionRequest.length === 0) {
+        //     return res.status(400).send("No Connection Request Pending")
+        // }
 
 
         res.json({
@@ -103,7 +103,7 @@ userRouter.get("/feed", userAuth, async(req, res) => {
                 {_id: { $nin: Array.from(hideUsersFromFeed) }  },
                 {_id: { $ne: loggedInUser._id }}
             ] ,  
-        }).select("firstName lastName photoUrl skills about").skip(skip).limit(limit)
+        }).select("firstName lastName photoUrl skills about age gender").skip(skip).limit(limit)
     //    .select(USER_SAFE_DATA)
         // console.log(users);
         
