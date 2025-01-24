@@ -110,7 +110,7 @@ GET /user/feed - it gets you the profiles of other users on platform
 - there are two imporatant functions in mongoDB
 
 - .skip() - how many documents do you skip from the first/starting
-- .limit() - how many documents you do want
+- .limit() - how many documents do you  want
 
 
 

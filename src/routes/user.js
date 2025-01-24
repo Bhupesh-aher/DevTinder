@@ -155,3 +155,8 @@ module.exports = userRouter;
 // $ne - not equal to
 
 
+// $nor -  returns all documents that fail to match both conditons
+// $not - returns documnents that do not match the condition
+
+// https://www.mongodb.com/docs/manual/reference/operator/query/
+

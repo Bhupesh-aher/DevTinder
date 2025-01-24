@@ -79,10 +79,21 @@ const userSchema = new mongoose.Schema({
     }
 )
 
+// compound index
+// we use comppound index in case where we want to serach on 2 fields of doc
+// and in case of one field we can give index directly - 
+// by doing index : 1
+// userSchema.index({firstName: 1, lastName: 1}) 
+
+// user.find({
+//     firstName: "akshay",
+//     lastName: "singh"
+// }) 
+// comppound index will make such serach query very fast 
 
 userSchema.methods.getJWT = async function () {
     const user = this;
-    const token = await jwt.sign({_id: user._id},  "", {
+    const token = await jwt.sign({_id: user._id},  "DEV@Tiner$790", {
         expiresIn: "7d",
     })
     return token;
