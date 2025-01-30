@@ -3,8 +3,8 @@ const mongoose = require('mongoose')
 
 
 const connectDB = async () => {
-     await mongoose.connect("mongodb+srv://NamsteDevS1:YCvvqEOilLftfHDB@namstenodejs.idl3x.mongodb.net/devTinder");
+     await mongoose.connect(process.env.DB_CONNECTION);
+     
 }
 
 module.exports = connectDB;
- // minesters

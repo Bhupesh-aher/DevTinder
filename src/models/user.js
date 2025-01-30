@@ -91,9 +91,11 @@ const userSchema = new mongoose.Schema({
 // }) 
 // comppound index will make such serach query very fast 
 
+
+
 userSchema.methods.getJWT = async function () {
     const user = this;
-    const token = await jwt.sign({_id: user._id},  "DEV@Tiner$790", {
+    const token = await jwt.sign({_id: user._id},  process.env.JWT_SECRET, {
         expiresIn: "7d",
     })
     return token;
